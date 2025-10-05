@@ -36,48 +36,58 @@ function getPreparedGoods(goods, sortType, isReversed) {
   }
 
   if (isReversed) {
-    return [...preparedGoods].reverse();
+    return preparedGoods.reverse();
   }
 
   return preparedGoods;
 }
 
 export const App = () => {
-  const [primarySort, setPrimarySort] = useState('');
-  const [isReversed, setIsReversed] = useState(false);
-  const isSorted = primarySort !== '' || isReversed;
+  const [sortState, setSortState] = useState({
+    sortType: '',
+    isReversed: false,
+  });
+
+  const { sortType, isReversed } = sortState;
+
+  const isSorted = sortType !== '' || isReversed;
 
   const handleSortByAlphabet = () => {
-    setPrimarySort(SORT_BY_ALPHABET);
-    setIsReversed(false);
+    setSortState({
+      sortType: SORT_BY_ALPHABET,
+      isReversed: false,
+    });
   };
 
   const handleSortByLength = () => {
-    setPrimarySort(SORT_BY_LENGTH);
-    setIsReversed(false);
+    setSortState({
+      sortType: SORT_BY_LENGTH,
+      isReversed: false,
+    });
   };
 
   const handleReverse = () => {
-    setIsReversed(prev => !prev);
+    setSortState(prevState => ({
+      ...prevState,
+      isReversed: !prevState.isReversed,
+    }));
   };
 
   const handleReset = () => {
-    setPrimarySort('');
-    setIsReversed(false);
+    setSortState({
+      sortType: '',
+      isReversed: false,
+    });
   };
 
-  const goodsForWork = getPreparedGoods(
-    goodsFromServer,
-    primarySort,
-    isReversed,
-  );
+  const goodsForWork = getPreparedGoods(goodsFromServer, sortType, isReversed);
 
   return (
     <div className="section content">
       <div className="buttons">
         <button
           type="button"
-          className={`button is-info ${primarySort === SORT_BY_ALPHABET ? '' : 'is-light'}`}
+          className={`button is-info ${sortType === SORT_BY_ALPHABET ? '' : 'is-light'}`}
           onClick={handleSortByAlphabet}
         >
           Sort alphabetically
@@ -85,7 +95,7 @@ export const App = () => {
 
         <button
           type="button"
-          className={`button is-success ${primarySort === SORT_BY_LENGTH ? '' : 'is-light'}`}
+          className={`button is-success ${sortType === SORT_BY_LENGTH ? '' : 'is-light'}`}
           onClick={handleSortByLength}
         >
           Sort by length
