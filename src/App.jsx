@@ -58,7 +58,7 @@ export const App = () => {
       <div className="buttons">
         <button
           type="button"
-          className={`button is-success ${primarySort === SORT_BY_ALPHABET && !isReversed ? '' : 'is-light'}`}
+          className={`button is-info ${primarySort === SORT_BY_ALPHABET ? '' : 'is-light'}`}
           onClick={() => {
             setPrimarySort(SORT_BY_ALPHABET);
             setIsReversed(false);
@@ -69,7 +69,7 @@ export const App = () => {
 
         <button
           type="button"
-          className={`button is-success ${primarySort === SORT_BY_LENGTH && !isReversed ? '' : 'is-light'}`}
+          className={`button is-success ${primarySort === SORT_BY_LENGTH ? '' : 'is-light'}`}
           onClick={() => {
             setPrimarySort(SORT_BY_LENGTH);
             setIsReversed(false);
@@ -80,7 +80,7 @@ export const App = () => {
 
         <button
           type="button"
-          className={`button is-success ${isReversed ? '' : 'is-light'}`}
+          className={`button is-warning ${isReversed ? '' : 'is-light'}`}
           onClick={() => setIsReversed(prev => !prev)}
         >
           Reverse
