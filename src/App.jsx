@@ -47,6 +47,25 @@ export const App = () => {
   const [isReversed, setIsReversed] = useState(false);
   const isSorted = primarySort !== '' || isReversed;
 
+  const handleSortByAlphabet = () => {
+    setPrimarySort(SORT_BY_ALPHABET);
+    setIsReversed(false);
+  };
+
+  const handleSortByLength = () => {
+    setPrimarySort(SORT_BY_LENGTH);
+    setIsReversed(false);
+  };
+
+  const handleReverse = () => {
+    setIsReversed(prev => !prev);
+  };
+
+  const handleReset = () => {
+    setPrimarySort('');
+    setIsReversed(false);
+  };
+
   const goodsForWork = getPreparedGoods(
     goodsFromServer,
     primarySort,
@@ -59,10 +78,7 @@ export const App = () => {
         <button
           type="button"
           className={`button is-info ${primarySort === SORT_BY_ALPHABET ? '' : 'is-light'}`}
-          onClick={() => {
-            setPrimarySort(SORT_BY_ALPHABET);
-            setIsReversed(false);
-          }}
+          onClick={handleSortByAlphabet}
         >
           Sort alphabetically
         </button>
@@ -70,10 +86,7 @@ export const App = () => {
         <button
           type="button"
           className={`button is-success ${primarySort === SORT_BY_LENGTH ? '' : 'is-light'}`}
-          onClick={() => {
-            setPrimarySort(SORT_BY_LENGTH);
-            setIsReversed(false);
-          }}
+          onClick={handleSortByLength}
         >
           Sort by length
         </button>
@@ -81,7 +94,7 @@ export const App = () => {
         <button
           type="button"
           className={`button is-warning ${isReversed ? '' : 'is-light'}`}
-          onClick={() => setIsReversed(prev => !prev)}
+          onClick={handleReverse}
         >
           Reverse
         </button>
@@ -90,10 +103,7 @@ export const App = () => {
           <button
             type="button"
             className="button is-danger is-light"
-            onClick={() => {
-              setPrimarySort('');
-              setIsReversed(false);
-            }}
+            onClick={handleReset}
           >
             Reset
           </button>
